@@ -1,25 +1,43 @@
 import { useState } from "react";
-//import { useForm } from "@mantine/hooks";
-import { Modal, Button, Group } from "@mantine/core";
+import { useForm } from "@mantine/hooks";
+import { Modal, Button, Group, TextInput, Textarea } from "@mantine/core";
 
 function AddTodo() {
   const [open, setOpen] = useState(false);
 
-  /* const form = useForm({
+  const form = useForm({
     initialValues: {
       title: "",
       body: "",
     },
-  }); */
+  });
+
+  function createTodo() {}
 
   return (
     <>
       <Modal opened={open} onClose={() => setOpen(false)} title="Create todo">
-        text
+        <form onSubmit={form.onSubmit(createTodo)}>
+          <TextInput
+            required
+            mb={12}
+            label="Todo"
+            placeholder="What do you want to do?"
+            {...form.getInputProps("title")}
+          />
+          <Textarea
+            required
+            mb={12}
+            label="Body"
+            placeholder="Tell me more..."
+            {...form.getInputProps("body")}
+          />
+          <Button>Create todo</Button>
+        </form>
       </Modal>
 
       <Group position="center">
-        <Button fullWidth mb={12} onClick={() => setOpen(true)}>
+        <Button type="submit" fullWidth mb={12} onClick={() => setOpen(true)}>
           ADD TODO
         </Button>
       </Group>
