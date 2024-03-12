@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useForm } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
 import { Modal, Button, Group, TextInput, Textarea } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
 function AddTodo() {
-  const [open, setOpen] = useState(false);
+  const [opened, { open, close }] = useDisclosure(false);
 
   const form = useForm({
     initialValues: {
@@ -16,7 +16,7 @@ function AddTodo() {
 
   return (
     <>
-      <Modal opened={open} onClose={() => setOpen(false)} title="Create todo">
+      <Modal opened={opened} onClose={close} centered title="Create todo">
         <form onSubmit={form.onSubmit(createTodo)}>
           <TextInput
             required
@@ -32,12 +32,12 @@ function AddTodo() {
             placeholder="Tell me more..."
             {...form.getInputProps("body")}
           />
-          <Button>Create todo</Button>
+          <Button type="submit">Create todo</Button>
         </form>
       </Modal>
 
-      <Group position="center">
-        <Button type="submit" fullWidth mb={12} onClick={() => setOpen(true)}>
+      <Group align="center">
+        <Button type="submit" fullWidth mb={12} onClick={open}>
           ADD TODO
         </Button>
       </Group>
